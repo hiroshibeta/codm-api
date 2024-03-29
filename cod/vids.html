@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Videos</title>
+<style>
+  body {
+    background-color: greenyellow;
+  }
+</style>
+</head>
+<body>
+<h2>Total Videos</h2>
+<div id="totalVideos"></div>
+
+<script>
+async function getTotalVideos() {
+  try {
+    const response = await fetch('/total/vids');
+    const data = await response.json();
+    document.getElementById('totalVideos').innerHTML = `Total Videos: ${data.totalVideos}`;
+  } catch (error) {
+    console.error("Error:", error);
+    document.getElementById('totalVideos').innerHTML = "Error fetching total videos";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", getTotalVideos);
+</script>
+</body>
+</html>

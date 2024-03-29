@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codm add panel</title>
+<style>
+  body {
+    background-color: greenyellow;
+  }
+</style>
+<script>
+  async function addLink() {
+    const linkInput = document.getElementById("link");
+    const link = linkInput.value;
+    if (!link || !link.startsWith("https://vt.tiktok.com/")) {
+      alert("Invalid or missing link parameter");
+      return;
+    }
+    try {
+      const response = await fetch(`/api/add/link?link=${encodeURIComponent(link)}`);
+      const data = await response.json();
+      document.getElementById('output').innerHTML = JSON.stringify(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+</script>
+</head>
+<body>
+<h1>Add Link</h1>
+<label for="link">Link:</label><br>
+<input type="text" id="link" name="link"><br><br>
+<button onclick="addLink()">Submit</button>
+<h2>Credits</h2>
+<p>Facebook: <a href="https://www.facebook.com/mapangi.09">Contact</a></p>
+<div id="output"></div> <!-- Added a div to display the output -->
+</body>
+</html>

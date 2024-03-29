@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Hide overflowing background */
+        }
+
+        /* Create animation for background color */
+        @keyframes backgroundAnimation {
+            0% { background-color: #87CEEB; } /* Blue */
+            50% { background-color: #FFC0CB; } /* Pink */
+            100% { background-color: #9370DB; } /* Purple */
+        }
+
+        /* Apply animation to body */
+        body {
+            animation: backgroundAnimation 10s infinite alternate; /* Adjust duration and timing as needed */
+        }
+
+        #video-container {
+            background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        h1, h2, p {
+            color: #fff; /* White text color */
+            text-align: center; /* Center-align text */
+        }
+
+        /* Adjust contact button size */
+        a.contact-button {
+            display: block;
+            width: 150px; /* Adjust width as needed */
+            margin: 0 auto; /* Center-align */
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        /* Adjust video size */
+        #video {
+            width: 320px; /* Adjust width as needed */
+            height: 240px; /* Adjust height as needed */
+        }
+    </style>
+</head>
+<body>
+    <h1 id="video-title">Random Video</h1>
+    <div id="video-container">
+        <video id="video" width="320" height="240" autoplay loop controls></video>
+    </div>
+
+    <h2>Contact me on Facebook</h2>
+    <!-- Adjusted contact button -->
+    <a href="https://www.facebook.com/localhost.dev.91" class="contact-button">Contact</a>
+
+    <h2>Total Videos</h2>
+    <div id="totalVideos"></div>
+
+    <script>
+        async function fetchRandomVideo() {
+            try {
+                let response = await fetch("/codm/request/f");
+                let data = await response.json();
+                let videoUrl = data.eurixmp4;
+                let username = data.username;
+                let nickname = data.nickname;
+let title = data.title;
+
+
+                document.getElementById('video').src = videoUrl;
+                document.getElementById('video-container').innerHTML += `<p id="video-info">Username: ${username}<br>Nickname: ${nickname}</p> <p id="video-title">Title: ${title}</p>`;
+
+            } catch (error) {
+                console.error('Error fetching random video:', error);
+            }
+        }
+
+        async function getTotalVideos() {
+            try {
+                const response = await fetch('/total/vids');
+                const data = await response.json();
+                document.getElementById('totalVideos').innerHTML = `Total Videos: ${data.totalVideos}`;
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('totalVideos').innerHTML = "Error fetching total videos";
+            }
+        }
+
+        fetchRandomVideo();
+        getTotalVideos();
+    </script>
+</body>
+</html>
