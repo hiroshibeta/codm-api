@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const axios = require('axios');
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.get("/", async function (req, res) {
 res.sendFile(path.join(__dirname, 'cod/codm.html'));
